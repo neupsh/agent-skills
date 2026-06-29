@@ -12,6 +12,12 @@
       "source": "./design-system",
       "description": "Apply a reusable, token-driven design system to any web UI. Ships the quality foundation (OKLCH color ramps, type pairing, layered elevation, spacing/radius/shadow scales, density + light/dark theming) with a per-app tunable brand layer, plus class-and-token component primitives. Use to audit and uplift unpolished UIs.",
       "category": "design"
+    },
+    {
+      "name": "safety-hooks",
+      "source": "./safety-hooks",
+      "description": "Defensive PreToolUse guards for Bash. Blocks grep/find/rg/fd searches that target virtual filesystems (/proc, /sys, /dev), which can cause infinite reads and pin CPU for hours.",
+      "category": "workflow"
     }
   ]
 }

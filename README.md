@@ -32,6 +32,7 @@ Or wire it into `settings.json` so it travels with your dotfiles:
 | Plugin | What it does |
 |---|---|
 | [`design-system`](./design-system) | Apply a reusable, token-driven design system to any web UI — OKLCH color ramps, type pairing, layered elevation, density + light/dark theming, and class-and-token component primitives. |
+| [`safety-hooks`](./safety-hooks) | Defensive `PreToolUse` Bash guards — block `grep`/`find`/`rg`/`fd` searches against virtual filesystems (`/proc`, `/sys`, `/dev`) that can pin CPU for hours. |
 
 ## Layout
 

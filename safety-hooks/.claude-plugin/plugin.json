@@ -1,0 +1,9 @@
+{
+  "name": "safety-hooks",
+  "description": "Defensive PreToolUse guards for Bash. Blocks grep/find/rg/fd searches that target virtual filesystems (/proc, /sys, /dev), which can cause infinite reads and pin CPU for hours.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Shekhar Neupane",
+    "url": "https://github.com/neupsh"
+  }
+}
