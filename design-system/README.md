@@ -27,7 +27,7 @@ Add the marketplace, then install the plugin:
 
 ```
 /plugin marketplace add neupsh/agent-skills
-/plugin install design-system@agent-skills
+/plugin install design-system@neupsh-skills
 ```
 
 Then in a target project just ask: *"apply my design system"*.

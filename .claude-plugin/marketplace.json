@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "agent-skills",
+  "name": "neupsh-skills",
   "description": "A home for reusable Claude Code skills, plugins, hooks, and agents.",
   "owner": {
     "name": "Shekhar Neupane",

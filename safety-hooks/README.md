@@ -15,7 +15,7 @@ Requires `jq` on `PATH`.
 
 ```
 /plugin marketplace add neupsh/agent-skills
-/plugin install safety-hooks@agent-skills
+/plugin install safety-hooks@neupsh-skills
 ```
 
 Once enabled, the hook is wired automatically via `hooks/hooks.json` — no

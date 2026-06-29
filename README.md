@@ -9,7 +9,7 @@ Add the marketplace, then install whichever plugins you want:
 
 ```
 /plugin marketplace add neupsh/agent-skills
-/plugin install design-system@agent-skills
+/plugin install design-system@neupsh-skills
 ```
 
 Or wire it into `settings.json` so it travels with your dotfiles:
@@ -17,12 +17,12 @@ Or wire it into `settings.json` so it travels with your dotfiles:
 ```json
 {
   "extraKnownMarketplaces": {
-    "agent-skills": {
+    "neupsh-skills": {
       "source": { "source": "github", "repo": "neupsh/agent-skills" }
     }
   },
   "enabledPlugins": {
-    "design-system@agent-skills": true
+    "design-system@neupsh-skills": true
   }
 }
 ```
