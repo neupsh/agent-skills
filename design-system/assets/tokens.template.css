@@ -1,0 +1,234 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — token foundation
+   ---------------------------------------------------------------------------
+   This file is the single source of truth for color, type, space, radius,
+   elevation and motion. Components consume these tokens; they NEVER hardcode
+   hex / px / shadow values. Re-skinning an app = editing the BRAND KNOBS block
+   below. Everything downstream re-derives automatically (OKLCH makes hue/chroma
+   changes propagate cleanly across the whole ramp).
+
+   Load order: import this FIRST, before primitives.css and before any
+   component styles. Set defaults on <html>:
+       <html data-theme="dark" data-density="regular">
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❶ BRAND KNOBS — the only block you tune per app.
+     Pick a hue, a chroma, and a font pairing. The ramps re-derive from these.
+     Reference hues:  teal 230 · cyan 215 · indigo 265 · violet 285
+                      green 150 · amber 75 · red 25 · magenta 350
+     Keep --neutral-hue within ~25° of --brand-hue so grays feel intentional,
+     not muddy. Lower --brand-chroma (≈0.07) for a calmer, corporate feel;
+     raise it (≈0.14) for a vivid, energetic one.
+     ───────────────────────────────────────────────────────────────────────── */
+  --brand-hue:     230;     /* accent hue */
+  --brand-chroma:  0.11;    /* accent saturation (0.06 calm → 0.15 vivid) */
+  --neutral-hue:   240;     /* tint of the gray ramp — cohere with brand-hue */
+
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  /* ↑ The single biggest "looks designed vs. looks default" lever. A distinct
+     display sans + a real mono for numbers/IDs/metrics beats the system stack.
+     Pairings that work: Space Grotesk + JetBrains Mono (geometric/technical),
+     Inter + IBM Plex Mono (neutral/clean), General Sans + Spline Sans Mono. */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❷ COLOR — derived from the knobs. Don't edit per app; tune the knobs.
+     4-step elevation ramp + 4-step text ramp. Single accent carries all
+     "signal"; semantic good/warn/bad are used sparingly and only for meaning.
+     ───────────────────────────────────────────────────────────────────────── */
+  /* Dark theme (default). Backgrounds get LIGHTER as they get closer to you. */
+  --bg-0: oklch(0.16 0.005 var(--neutral-hue));   /* app canvas (furthest)   */
+  --bg-1: oklch(0.20 0.006 var(--neutral-hue));   /* cards / panels          */
+  --bg-2: oklch(0.24 0.008 var(--neutral-hue));   /* raised / hover          */
+  --bg-3: oklch(0.28 0.010 var(--neutral-hue));   /* popovers / active       */
+
+  --hairline:        oklch(1 0 0 / 0.07);          /* 1px separators          */
+  --hairline-strong: oklch(1 0 0 / 0.12);          /* inset top highlight     */
+
+  --text-0: oklch(0.98 0 0);                        /* headings / primary      */
+  --text-1: oklch(0.78 0.01 var(--neutral-hue));    /* body                    */
+  --text-2: oklch(0.58 0.012 var(--neutral-hue));   /* labels / secondary      */
+  --text-3: oklch(0.42 0.012 var(--neutral-hue));   /* muted / disabled        */
+
+  --accent:      oklch(0.81 var(--brand-chroma) var(--brand-hue));        /* signal */
+  --accent-hi:   oklch(0.87 var(--brand-chroma) var(--brand-hue));        /* hover  */
+  --accent-soft: oklch(0.81 var(--brand-chroma) var(--brand-hue) / 0.14); /* tints  */
+  --accent-glow: oklch(0.81 var(--brand-chroma) var(--brand-hue) / 0.40); /* halos  */
+  --accent-edge: oklch(0.88 var(--brand-chroma) var(--brand-hue) / 0.6);  /* lit border  */
+  --accent-ring: oklch(0.92 var(--brand-chroma) var(--brand-hue) / 0.45); /* inset ring  */
+  --accent-line: oklch(0.88 var(--brand-chroma) var(--brand-hue) / 0.25); /* subtle active outline (nav) */
+  --on-accent:   oklch(0.20 0.04 var(--brand-hue));  /* text on a solid accent fill */
+
+  /* Semantic — meaning only (success/caution/risk). Not decoration. */
+  --good: oklch(0.78 0.16 150);
+  --warn: oklch(0.82 0.15 80);
+  --bad:  oklch(0.65 0.17 28);
+  --good-soft: oklch(0.78 0.16 150 / 0.14);
+  --warn-soft: oklch(0.82 0.15 80  / 0.14);
+  --bad-soft:  oklch(0.65 0.17 28  / 0.14);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❸ RADIUS — a 3-step scale. Pick from these; never hardcode a px radius.
+     ───────────────────────────────────────────────────────────────────────── */
+  --radius-s: 8px;    /* inputs, buttons, small chips        */
+  --radius-m: 12px;   /* cards, panels                        */
+  --radius-l: 16px;   /* modals, large surfaces               */
+  --radius-pill: 999px;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❹ ELEVATION — the recipe that makes surfaces feel real. Every card uses a
+     layered shadow: inset top highlight (catches light) + tight contact shadow
+     + soft ambient drop. Flat single-border panels are the #1 "cheap" tell.
+     ───────────────────────────────────────────────────────────────────────── */
+  --shadow-1:
+    inset 0 1px 0 var(--hairline-strong),
+    0 1px 2px rgba(0,0,0,0.28);                          /* resting chips/inputs */
+  --shadow-2:
+    inset 0 1px 0 var(--hairline-strong),
+    0 1px 2px rgba(0,0,0,0.28),
+    0 14px 34px rgba(0,0,0,0.34);                        /* cards / panels       */
+  --shadow-3:
+    inset 0 1px 0 var(--hairline-strong),
+    0 8px 24px rgba(0,0,0,0.40),
+    0 30px 80px rgba(0,0,0,0.50);                        /* modals / overlays    */
+  --glow-accent: 0 0 24px var(--accent-glow);            /* accent halo          */
+
+  /* Glassmorphism for overlays (modals, drawers, floating bars). */
+  --glass-bg:   oklch(0.20 0.006 var(--neutral-hue) / 0.72);
+  --glass-blur: blur(28px) saturate(140%);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❺ MOTION — short, consistent, honored under reduced-motion (see bottom).
+     ───────────────────────────────────────────────────────────────────────── */
+  --ease:      cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast:  0.12s;
+  --dur-base:  0.2s;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❻ SPACE — a single rhythm. Use these everywhere instead of magic rem/px.
+     ───────────────────────────────────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ❼ DENSITY — remapped by [data-density]. These drive row heights, card
+     padding and the type scale together so the UI breathes consistently.
+     Defaults below = "regular".
+     ───────────────────────────────────────────────────────────────────────── */
+  --row-h:    44px;    /* table / list rows                  */
+  --control-h:    34px;  /* buttons, inputs, selects         */
+  --control-h-sm: 28px;  /* small buttons / chips            */
+  --pad-card: 18px;
+  --pad-x:    16px;
+  --gap:      14px;
+  --fs-base: 13.5px;   /* body                    */
+  --fs-sm:   12px;     /* secondary               */
+  --fs-xs:   11px;     /* micro-labels / captions */
+  --fs-h:    22px;     /* page / card title       */
+  --fs-h2:   16px;     /* section heading         */
+}
+
+[data-density="compact"] {
+  --row-h: 36px;  --control-h: 30px;  --control-h-sm: 26px;
+  --pad-card: 14px;  --pad-x: 12px;  --gap: 10px;
+  --fs-base: 12.5px; --fs-sm: 11.5px; --fs-xs: 10.5px; --fs-h: 19px; --fs-h2: 14.5px;
+}
+[data-density="spacious"] {
+  --row-h: 52px;  --control-h: 38px;  --control-h-sm: 32px;
+  --pad-card: 22px;  --pad-x: 20px;  --gap: 18px;
+  --fs-base: 14.5px; --fs-sm: 13px; --fs-xs: 11.5px; --fs-h: 26px; --fs-h2: 18px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BRAND THEMES — named skins of the SAME system. Each only re-points the three
+   brand knobs (+ optionally fonts); the whole OKLCH ramp, elevation, nav, etc.
+   re-derive. Compose freely with theme + density:
+       <html data-brand="indigo" data-theme="dark" data-density="compact">
+   Brand, theme and density are three independent axes. The :root defaults are
+   the "teal" brand, so omitting data-brand gives you teal.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-brand="teal"] {              /* teal HUD — the default identity */
+  --brand-hue: 230; --brand-chroma: 0.11; --neutral-hue: 240;
+}
+[data-brand="indigo"] {            /* indigo/violet identity */
+  --brand-hue: 277; --brand-chroma: 0.13; --neutral-hue: 280;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LIGHT THEME — backgrounds invert (lighter = further), text darkens, and the
+   accent is pushed DARKER so it stays legible on white. Glass + shadow alpha
+   re-tuned for a light field. Toggle with <html data-theme="light">.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-0: oklch(0.985 0.003 var(--neutral-hue));
+  --bg-1: oklch(1 0 0);
+  --bg-2: oklch(0.965 0.004 var(--neutral-hue));
+  --bg-3: oklch(0.94 0.005 var(--neutral-hue));
+  --hairline:        oklch(0 0 0 / 0.08);
+  --hairline-strong: oklch(0 0 0 / 0.06);
+  --text-0: oklch(0.18 0.01 var(--neutral-hue));
+  --text-1: oklch(0.32 0.012 var(--neutral-hue));
+  --text-2: oklch(0.50 0.012 var(--neutral-hue));
+  --text-3: oklch(0.62 0.012 var(--neutral-hue));
+
+  --accent:      oklch(0.52 calc(var(--brand-chroma) + 0.02) var(--brand-hue));
+  --accent-hi:   oklch(0.44 calc(var(--brand-chroma) + 0.03) var(--brand-hue));
+  --accent-soft: oklch(0.52 calc(var(--brand-chroma) + 0.02) var(--brand-hue) / 0.12);
+  --accent-glow: oklch(0.52 calc(var(--brand-chroma) + 0.02) var(--brand-hue) / 0.22);
+  --on-accent:   oklch(0.99 0 0);
+  --good: oklch(0.48 0.17 150);
+  --warn: oklch(0.55 0.17 60);
+  --bad:  oklch(0.52 0.20 25);
+
+  --shadow-1:
+    inset 0 1px 0 oklch(1 0 0 / 0.9),
+    0 1px 2px rgba(0,0,0,0.05);
+  --shadow-2:
+    inset 0 1px 0 oklch(1 0 0 / 0.9),
+    0 1px 2px rgba(0,0,0,0.06),
+    0 12px 28px rgba(0,0,0,0.10);
+  --shadow-3:
+    inset 0 1px 0 oklch(1 0 0 / 0.9),
+    0 8px 24px rgba(0,0,0,0.12),
+    0 30px 80px rgba(0,0,0,0.18);
+  --glass-bg: oklch(1 0 0 / 0.72);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BASE — apply the foundation to the document. Keep this minimal; everything
+   else lives in primitives.css and component styles.
+   ───────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }  /* so width:100% + padding never overflows */
+
+html { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--bg-0);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  letter-spacing: -0.005em;            /* tight tracking reads as "designed"    */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 { letter-spacing: -0.02em; color: var(--text-0); font-weight: 600; }
+
+/* Numbers (prices, metrics, counts, IDs) should be tabular + mono so columns
+   line up and digits don't jitter. Add class="num" to any numeric run. */
+.num, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

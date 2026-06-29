@@ -1,0 +1,9 @@
+{
+  "name": "design-system",
+  "description": "Apply a reusable, token-driven design system to any web UI. The quality foundation (OKLCH color ramps, type pairing, layered elevation, spacing/radius/shadow scales, density + light/dark theming) with a per-app tunable brand layer and class-and-token component primitives. Use to audit and uplift unpolished UIs.",
+  "version": "0.1.3",
+  "author": {
+    "name": "Shekhar Neupane",
+    "url": "https://github.com/neupsh"
+  }
+}

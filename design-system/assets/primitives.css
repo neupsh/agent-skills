@@ -1,0 +1,235 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRIMITIVES — class-and-token component base.
+   ---------------------------------------------------------------------------
+   Import AFTER tokens.template.css. These are the canonical building blocks:
+   one class + modifier classes, every value a token. Wrap them in framework
+   components (Button.svelte / Btn.vue / <Button>) that map props → classes.
+   Rule: app code never writes raw <button style=...> — it uses .btn (or the
+   component that emits it). Variation = a modifier, never a fork.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Button ──────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  height: var(--control-h); padding: 0 var(--space-4); white-space: nowrap;
+  font: 500 var(--fs-sm)/1 var(--font-sans); letter-spacing: -0.01em;
+  color: var(--text-0); background: var(--bg-1);
+  border: 1px solid var(--hairline); border-radius: var(--radius-s);
+  box-shadow: var(--shadow-1); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+.btn:hover  { background: var(--bg-2); border-color: var(--hairline-strong); }
+.btn:active { transform: translateY(0.5px); }
+.btn:focus-visible { outline: none; box-shadow: var(--shadow-1), 0 0 0 3px var(--accent-soft); }
+.btn:disabled { opacity: 0.42; filter: saturate(0.4); cursor: not-allowed; box-shadow: none; }
+
+/* Primary — the lit accent button. The "glow on the border" = a tinted edge +
+   an inset 1px accent ring + a soft 24px halo + a 1px white top sheen. */
+.btn.primary {
+  color: var(--on-accent); font-weight: 600;
+  background: linear-gradient(180deg, var(--accent-hi), var(--accent));
+  border: 1px solid var(--accent-edge);
+  box-shadow:
+    inset 0 0 0 1px var(--accent-ring),
+    inset 0 1px 0 oklch(1 0 0 / 0.4),
+    0 0 24px var(--accent-glow);
+}
+.btn.primary:hover { filter: brightness(1.05); }
+.btn.primary:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent-ring), inset 0 1px 0 oklch(1 0 0 / 0.4),
+              0 0 24px var(--accent-glow), 0 0 0 3px var(--accent-soft);
+}
+.btn.ghost  { background: transparent; border-color: transparent; box-shadow: none; color: var(--text-1); }
+.btn.ghost:hover { background: var(--bg-2); color: var(--text-0); }
+.btn.danger { color: var(--bad); border-color: var(--bad-soft); background: var(--bad-soft); }
+.btn.danger:hover { border-color: var(--bad); }
+.btn.sm     { height: var(--control-h-sm); padding: 0 var(--space-3); font-size: var(--fs-xs); }
+.btn.icon   { width: var(--control-h); padding: 0; }
+.btn.sm.icon { width: var(--control-h-sm); }
+
+/* ── Card / Panel ────────────────────────────────────────────────────────── */
+.card {
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 64%);
+  border: 1px solid var(--hairline); border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2); padding: var(--pad-card);
+}
+.card-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 0 0 var(--space-4); font: 600 var(--fs-h2)/1.2 var(--font-sans);
+  letter-spacing: -0.02em; color: var(--text-0);
+}
+.card.flush { background: var(--bg-1); box-shadow: none; }   /* opt out of elevation */
+
+/* ── Input / Select / Textarea ───────────────────────────────────────────── */
+.input, .select, .textarea {
+  width: 100%; height: var(--control-h); padding: 0 var(--space-3);
+  font: 400 var(--fs-base)/1 var(--font-sans); color: var(--text-0);
+  background: var(--bg-0); border: 1px solid var(--hairline);
+  border-radius: var(--radius-s); box-shadow: var(--shadow-1);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.textarea { height: auto; min-height: calc(var(--control-h) * 2); padding: var(--space-3); line-height: 1.5; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--text-3); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.select { appearance: none; background-image: none; cursor: pointer; }
+.label  { display: block; margin-bottom: var(--space-2); font: 500 var(--fs-xs)/1 var(--font-sans);
+          text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-2); }
+
+/* ── Pill / Badge ────────────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  height: 22px; padding: 0 var(--space-2);
+  font: 500 var(--fs-xs)/1 var(--font-sans); letter-spacing: 0.02em;
+  color: var(--text-1); background: var(--bg-2);
+  border: 1px solid var(--hairline); border-radius: var(--radius-pill);
+}
+.pill.accent { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+.pill.good   { color: var(--good);   background: var(--good-soft);   border-color: transparent; }
+.pill.warn   { color: var(--warn);   background: var(--warn-soft);   border-color: transparent; }
+.pill.bad    { color: var(--bad);    background: var(--bad-soft);    border-color: transparent; }
+
+/* ── Status dot ──────────────────────────────────────────────────────────── */
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); display: inline-block; }
+.dot.good { background: var(--good); box-shadow: 0 0 8px var(--good); }
+.dot.warn { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+.dot.bad  { background: var(--bad);  box-shadow: 0 0 8px var(--bad); }
+.dot.pulse { position: relative; }
+.dot.pulse::before {
+  content: ""; position: absolute; inset: -3px; border-radius: 50%;
+  border: 1px solid currentColor; animation: ds-pulse 1.8s var(--ease) infinite;
+}
+@keyframes ds-pulse { 0% { transform: scale(0.6); opacity: 0.8; } 100% { transform: scale(1.6); opacity: 0; } }
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.tbl thead th {
+  position: sticky; top: 0; z-index: 1; text-align: left;
+  padding: var(--space-2) var(--space-3);
+  font: 500 var(--fs-xs)/1 var(--font-sans); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-2); background: var(--bg-1); border-bottom: 1px solid var(--hairline);
+}
+.tbl tbody td { padding: var(--space-3); border-bottom: 1px solid var(--hairline); color: var(--text-1); }
+.tbl tbody tr:hover { background: var(--bg-2); }
+.tbl tbody tr.selected { background: var(--accent-soft); }
+.tbl td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* ── Glass overlay (modal / drawer / floating bar) ───────────────────────── */
+.glass {
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.04), oklch(1 0 0 / 0) 40%), var(--glass-bg);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--hairline-strong); border-radius: var(--radius-l);
+  box-shadow: var(--shadow-3);
+}
+
+/* ── Segmented control ───────────────────────────────────────────────────── */
+.segmented { display: inline-flex; padding: 3px; gap: 2px; background: var(--bg-0);
+             border: 1px solid var(--hairline); border-radius: var(--radius-s); }
+.segmented > button {
+  height: calc(var(--row-h) - 12px); padding: 0 var(--space-3); border: none; cursor: pointer;
+  font: 500 var(--fs-xs)/1 var(--font-sans); color: var(--text-2);
+  background: transparent; border-radius: calc(var(--radius-s) - 3px);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.segmented > button[aria-selected="true"], .segmented > button.active {
+  color: var(--text-0); background: var(--bg-2); box-shadow: var(--shadow-1);
+}
+
+/* ── Sidebar nav ─────────────────────────────────────────────────────────────
+   Icon + label rows with an active state (accent-soft fill + inset accent
+   outline), count pills and inline status dots. Put status via .dot.good.pulse
+   inside a .nav-item for the live "sonar" indicator. */
+.nav { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-5) var(--space-3);
+       background: var(--bg-0); border-right: 1px solid var(--hairline); overflow: hidden; }
+.nav-brand { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-1) var(--space-2) var(--space-2);
+             font: 600 18px/1.1 var(--font-sans); letter-spacing: -0.03em; color: var(--text-0); }
+.nav-brand .badge { flex: none; display: inline-grid; place-items: center; width: 32px; height: 32px;
+             border-radius: 50%; background: var(--accent); color: var(--on-accent); font-weight: 700;
+             box-shadow: 0 0 14px var(--accent-glow); }
+.nav-group-label { font: 600 10px/1 var(--font-sans); letter-spacing: 0.1em; text-transform: uppercase;
+             color: var(--text-3); padding: var(--space-2) var(--space-3); }
+.nav-item { display: flex; align-items: center; gap: var(--space-3); padding: 9px var(--space-3);
+            border-radius: var(--radius-s); color: var(--text-1); font-size: var(--fs-base);
+            cursor: pointer; user-select: none;
+            transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.nav-item:hover { background: var(--bg-1); color: var(--text-0); }
+.nav-item.active { background: var(--accent-soft); color: var(--accent-hi); box-shadow: inset 0 0 0 1px var(--accent-line); }
+.nav-item svg, .nav-item .ico { width: 16px; height: 16px; flex: none; opacity: 0.9; }
+.nav-item .count { margin-left: auto; font: 500 11px/1 var(--font-mono); font-variant-numeric: tabular-nums;
+            color: var(--text-3); background: var(--bg-1); padding: 1px 7px; border-radius: var(--radius-pill); }
+.nav-item.active .count { background: var(--accent-soft); color: var(--accent-hi); }
+.nav-foot { margin-top: auto; display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* ── App shell (responsive) ──────────────────────────────────────────────────
+   Sidebar + main, full-width by default (the fix for "doesn't use the screen").
+   Tablet → sidebar collapses to an icon rail. Phone → sidebar becomes an
+   off-canvas drawer (toggle .nav-open on .app-shell via a tiny JS hook). */
+.app-shell { --nav-w: 224px; display: grid; grid-template-columns: var(--nav-w) 1fr; min-height: 100vh; }
+.app-main  { display: flex; flex-direction: column; min-width: 0; }   /* min-width:0 lets content shrink */
+.topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: var(--space-4);
+          height: 56px; padding: 0 var(--pad-x); border-bottom: 1px solid var(--hairline);
+          background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); }
+.topbar h1 { margin: 0; font-size: var(--fs-h); }
+.topbar .sp { flex: 1; }
+.content { flex: 1; padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+.nav-toggle { display: none; }   /* hamburger — only appears on phone */
+.nav-scrim  { display: none; }
+
+/* Optional reading-width cap. Omit it and content runs full-bleed. */
+.container { width: 100%; max-width: var(--container-max, 1600px); margin-inline: auto; }
+
+/* Auto-reflowing card grid — the responsive workhorse: cards wrap to fit the
+   width with NO media queries. Tune density per grid with --col-min. */
+.grid-auto { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(var(--col-min, 200px), 1fr)); }
+
+/* Two-pane page (main + aside) that stacks on narrow screens. */
+.split { display: grid; gap: var(--space-5); grid-template-columns: 1fr var(--aside, 340px); align-items: start; }
+.split.aside-left { grid-template-columns: var(--aside, 340px) 1fr; }
+
+@media (max-width: 1024px) {   /* tablet: icon rail */
+  .app-shell { --nav-w: 64px; }
+  .nav-item .txt, .nav-group-label, .nav-brand .txt, .nav-item .count, .nav-foot .txt { display: none; }
+  .nav-item, .nav-brand { justify-content: center; padding-inline: 0; }
+}
+@media (max-width: 680px) {    /* phone: off-canvas drawer + single column */
+  .app-shell { --nav-w: 0; grid-template-columns: 1fr; }
+  .nav { position: fixed; inset: 0 auto 0 0; width: 240px; z-index: 60;
+         transform: translateX(-100%); transition: transform var(--dur-base) var(--ease); }
+  .app-shell.nav-open .nav { transform: none; box-shadow: var(--shadow-3); }
+  .nav-item .txt, .nav-group-label, .nav-brand .txt, .nav-item .count, .nav-foot .txt { display: revert; }
+  .nav-item, .nav-brand { justify-content: flex-start; padding-inline: var(--space-3); }
+  .nav-toggle { display: inline-flex; }
+  .nav-scrim { display: block; position: fixed; inset: 0; z-index: 50; background: rgb(0 0 0 / 0.5);
+               opacity: 0; pointer-events: none; transition: opacity var(--dur-base) var(--ease); }
+  .app-shell.nav-open .nav-scrim { opacity: 1; pointer-events: auto; }
+  .split, .split.aside-left { grid-template-columns: 1fr; }
+}
+
+/* ── App backdrop ("stage" aurora) ───────────────────────────────────────────
+   Put on the app shell / main scroll container so surfaced cards read as lifted
+   above a receding, accent-lit field. This is a big part of why a polished app
+   feels rich instead of flat. Two radial accent glows over --bg-0 + an edge
+   vignette that darkens the periphery so the lit center recedes. */
+.app-stage {
+  position: relative;
+  background:
+    radial-gradient(120% 70% at 50% -8%,  var(--accent-soft), transparent 56%),
+    radial-gradient(90% 60% at 100% 114%, var(--accent-soft), transparent 60%),
+    var(--bg-0);
+}
+.app-stage::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(125% 105% at 50% 36%, transparent 56%, rgb(0 0 0 / 0.28) 100%);
+}
+[data-theme="light"] .app-stage::before {
+  background: radial-gradient(125% 105% at 50% 36%, transparent 60%, rgb(0 0 0 / 0.05) 100%);
+}
+.app-stage > * { position: relative; z-index: 1; }
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+.hairline { border: none; border-top: 1px solid var(--hairline); margin: var(--space-4) 0; }
+.stack    { display: flex; flex-direction: column; gap: var(--gap); }
+.row      { display: flex; align-items: center; gap: var(--gap); }

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agent-skills",
+  "description": "A home for reusable Claude Code skills, plugins, hooks, and agents.",
+  "owner": {
+    "name": "Shekhar Neupane",
+    "url": "https://github.com/neupsh"
+  },
+  "plugins": [
+    {
+      "name": "design-system",
+      "source": "./design-system",
+      "description": "Apply a reusable, token-driven design system to any web UI. Ships the quality foundation (OKLCH color ramps, type pairing, layered elevation, spacing/radius/shadow scales, density + light/dark theming) with a per-app tunable brand layer, plus class-and-token component primitives. Use to audit and uplift unpolished UIs.",
+      "category": "design"
+    }
+  ]
+}
