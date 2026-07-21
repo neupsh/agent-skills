@@ -106,6 +106,21 @@ Each plugin is independently installable, so you can enable only what you need �
 Claude Code toggles a plugin as a whole unit, which is why each concern is its own
 plugin rather than one bundle.
 
+## Bare-name skills via `install.sh`
+
+`design-system` and `safety-hooks` ship assets and hooks, so they install as plugins.
+`engineering-skills` and `personal-ops` are skills only, and can alternatively be symlinked into
+`~/.claude/skills` to load under **bare names** (`tech-lead`, not `engineering-skills:tech-lead`):
+
+```bash
+./install.sh          # symlink engineering-skills + personal-ops skills
+./install.sh --remove # remove those symlinks
+```
+
+> **Pick one mechanism per plugin.** Enabling a plugin in `settings.json` *and* symlinking its
+> skills loads them twice. If you switch to `/plugin install engineering-skills@neupsh-skills`,
+> run `./install.sh --remove` first — and expect invocation names to gain the `<plugin>:` prefix.
+
 ## No personal data — hard rule
 
 **This repo is public.** Nothing that identifies a person, employer, account, or system may enter
