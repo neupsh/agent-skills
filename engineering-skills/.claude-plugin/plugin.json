@@ -1,0 +1,9 @@
+{
+  "name": "engineering-skills",
+  "description": "Staff/principal-engineer judgment encoded as executable guidance: running work with a model hierarchy (tech-lead), an opt-in ticket loop (autoship), cost-tiered testing (test-ladder), strangler-style modularization (ports-and-modules), free local AI substitutes (local-ai-stack), owning your own voice models (train-voice-models), and keeping agent-facing docs true (repo-truth). Harness-agnostic Markdown; each skill declares what the consuming project must bind.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Shekhar Neupane",
+    "url": "https://github.com/neupsh"
+  }
+}

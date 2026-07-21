@@ -18,6 +18,18 @@
       "source": "./safety-hooks",
       "description": "Defensive PreToolUse guards for Bash. Blocks grep/find/rg/fd searches that target virtual filesystems (/proc, /sys, /dev), which can cause infinite reads and pin CPU for hours.",
       "category": "workflow"
+    },
+    {
+      "name": "engineering-skills",
+      "source": "./engineering-skills",
+      "description": "Staff/principal-engineer judgment encoded as executable guidance: running work with a model hierarchy (tech-lead), an opt-in ticket loop (autoship), cost-tiered testing (test-ladder), strangler-style modularization (ports-and-modules), free local AI substitutes (local-ai-stack), owning your own voice models (train-voice-models), and keeping agent-facing docs true (repo-truth).",
+      "category": "workflow"
+    },
+    {
+      "name": "personal-ops",
+      "source": "./personal-ops",
+      "description": "Skills for high-stakes personal admin. Currently: amending a filed tax return in consumer tax software — derive the expected delta by hand before trusting the software's running total, handle employee-stock basis and wash sales, verify against the generated forms.",
+      "category": "workflow"
     }
   ]
 }

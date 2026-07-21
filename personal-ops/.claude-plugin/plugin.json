@@ -1,0 +1,9 @@
+{
+  "name": "personal-ops",
+  "description": "Skills for high-stakes personal admin where a mistake is expensive and hard to reverse. Currently: amending a filed tax return in consumer tax software — derive the expected delta by hand before trusting the software's running total, handle employee-stock basis and wash sales, verify against generated forms.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Shekhar Neupane",
+    "url": "https://github.com/neupsh"
+  }
+}
