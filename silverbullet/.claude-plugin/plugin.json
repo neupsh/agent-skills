@@ -1,0 +1,9 @@
+{
+  "name": "silverbullet",
+  "description": "SilverBullet 2.x: Space Lua configuration and SLIQ queries, plug development, the /.fs HTTP API for reading and writing notes, and community git-sync patterns. Corrects v1-only tutorials (SETTINGS.md, #query blocks, federation) that no longer apply.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Shekhar Neupane",
+    "url": "https://github.com/neupsh"
+  }
+}

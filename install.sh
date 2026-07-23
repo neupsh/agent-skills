@@ -18,7 +18,7 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_DST="$HOME/.claude/skills"
 
 # Plugins whose skills are linked under bare names.
-PLUGINS=(engineering-skills personal-ops)
+PLUGINS=(engineering-skills personal-ops silverbullet)
 
 mkdir -p "$SKILLS_DST"
 

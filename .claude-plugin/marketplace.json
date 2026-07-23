@@ -30,6 +30,12 @@
       "source": "./personal-ops",
       "description": "Skills for high-stakes personal admin. Currently: amending a filed tax return in consumer tax software — derive the expected delta by hand before trusting the software's running total, handle employee-stock basis and wash sales, verify against the generated forms.",
       "category": "workflow"
+    },
+    {
+      "name": "silverbullet",
+      "source": "./silverbullet",
+      "description": "Work with SilverBullet 2.x — the self-hosted, local-first Markdown PKM. Space Lua config/queries/commands/widgets, the /.fs HTTP API for agent-driven note read/write, plug development, git-sync patterns, and PKM workflows. Corrects the many v1-only tutorials (SETTINGS.md, #query, federation) that no longer apply.",
+      "category": "workflow"
     }
   ]
 }

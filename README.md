@@ -18,6 +18,7 @@ Add the marketplace, then install whichever plugins you want:
 /plugin install safety-hooks@neupsh-skills
 /plugin install engineering-skills@neupsh-skills
 /plugin install personal-ops@neupsh-skills
+/plugin install silverbullet@neupsh-skills
 ```
 
 ### Wire it into your dotfiles
@@ -36,7 +37,8 @@ your dotfiles across machines:
     "design-system@neupsh-skills": true,
     "safety-hooks@neupsh-skills": true,
     "engineering-skills@neupsh-skills": true,
-    "personal-ops@neupsh-skills": true
+    "personal-ops@neupsh-skills": true,
+    "silverbullet@neupsh-skills": true
   }
 }
 ```
@@ -56,6 +58,7 @@ your dotfiles across machines:
 | [`safety-hooks`](./safety-hooks) | Defensive `PreToolUse` Bash guards — block `grep`/`find`/`rg`/`fd` searches against virtual filesystems (`/proc`, `/sys`, `/dev`) that can pin CPU for hours. |
 | [`engineering-skills`](./engineering-skills) | Seven harness-agnostic engineering skills encoding staff-engineer judgment — `tech-lead`, `autoship`, `test-ladder`, `ports-and-modules`, `local-ai-stack`, `train-voice-models`, `repo-truth`. |
 | [`personal-ops`](./personal-ops) | High-stakes personal admin where being verifiably right beats being fast. Currently `amend-tax-return`. |
+| [`silverbullet`](./silverbullet) | Work with SilverBullet 2.x (self-hosted Markdown PKM): Space Lua config/queries, the `/.fs` HTTP API for agent-driven note edits, plug development, and git-sync — with the v1→v2 traps corrected. |
 
 ### `design-system`
 
@@ -97,6 +100,10 @@ engineering-skills/               # plugin: harness-agnostic engineering skills
   skills/<name>/SKILL.md (+ references/)
   README.md
 personal-ops/                     # plugin: high-stakes personal admin
+  .claude-plugin/plugin.json
+  skills/<name>/SKILL.md (+ references/)
+  README.md
+silverbullet/                     # plugin: SilverBullet 2.x knowledge
   .claude-plugin/plugin.json
   skills/<name>/SKILL.md (+ references/)
   README.md
