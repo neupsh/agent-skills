@@ -75,3 +75,29 @@ Trade-off: more robust (survives a SilverBullet crash or restart, doesn't depend
 `SB_SHELL_BACKEND`, easier to observe with normal host tooling/logging) but loses the in-app
 **Git: Sync** button and any Space Lua hooks that react to sync state. Decouples sync reliability
 from the SilverBullet process at the cost of a separate thing to maintain.
+
+## Running both in-app AND a host cron: the two-writer ownership trap
+
+If you keep the in-app library (for a manual "commit now" button) *and* run a host cron on the same
+bind-mounted `.git`, two different users write the repository: the container app (usually a
+non-root uid) and the host cron (usually root). This has two failure modes worth designing around:
+
+- **Dubious ownership.** Modern git refuses to operate on a repo whose top-level/`.git` is owned by
+  a *different* uid than the process (CVE-2022-24765): `fatal: detected dubious ownership`. If the
+  host (root) initialized the repo, the container app (non-root) will hit this. Fix by aligning
+  ownership - `chown -R <app-uid>:<app-gid> .git` - or by whitelisting the path in the *global*
+  git config of whichever user trips it (`git config --global --add safe.directory <path>`;
+  `safe.directory` is ignored from the repo's own config, by design).
+- **Diverging object ownership over time.** Once both users commit, each creates new loose objects
+  and shard directories (`.git/objects/xx/`) owned by itself. The other user must still be able to
+  add files into those shard dirs. The standard fix is `git config core.sharedRepository group`
+  plus a common group and setgid dirs - **but setgid directory-GID inheritance is not honored on
+  every filesystem** (notably FUSE overlays such as Unraid's `/mnt/user` shfs). Where inheritance
+  doesn't work, root-created shard dirs come out with root's gid and the app user can't write them,
+  so in-app commits start failing days later once fresh shards appear. The portable fix: have the
+  host cron **re-assert ownership at the end of each run**, e.g.
+  `find .git \( ! -uid <app-uid> -o ! -gid <app-gid> \) -exec chown <app-uid>:<app-gid> {} +`.
+  A one-off `chown` is not enough - it passes an immediate test and silently regresses.
+
+Note also that if the container has **no ssh client**, the in-app side can only ever *commit*
+locally; the host cron (or an HTTPS-token remote) is what actually pushes.
